@@ -6,7 +6,6 @@ import nltk
 
 from nltk.corpus import stopwords
 from tensorflow.keras.models import load_model
-from tensorflow.keras.layers import SimpleRNN
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # ---------------- PAGE CONFIG ----------------
@@ -33,11 +32,9 @@ local_css("style.css")
 # ---------------- NLTK ----------------
 
 try:
-
     nltk.data.find("corpora/stopwords")
 
 except:
-
     nltk.download("stopwords")
 
 stop_words=set(
@@ -49,12 +46,9 @@ stop_words=set(
 @st.cache_resource
 def load_all():
 
-    model=load_model(
+    model = load_model(
         "mental_health_rnn_model.h5",
-        compile=False,
-        custom_objects={
-            "SimpleRNN":SimpleRNN
-        }
+        compile=False
     )
 
     with open(
@@ -86,7 +80,6 @@ except Exception as e:
 
     st.stop()
 
-
 # ---------------- SETTINGS ----------------
 
 max_len=100
@@ -116,33 +109,31 @@ def preprocess_text(text):
 
     return " ".join(words)
 
-
-# ---------------- TIPS ----------------
+# ---------------- GUIDANCE ----------------
 
 tips={
 
 "Anxiety":
-"💙 Slow down. Take deep breaths and speak with someone you trust.",
+"💙 Slow down. Take deep breaths and talk to someone you trust.",
 
 "Depression":
-"🌸 Small steps matter. Take a short walk and talk with loved ones.",
+"🌸 Small steps matter. Reach out to loved ones and rest.",
 
 "Stress":
-"☕ Take a break and focus on one task at a time.",
+"☕ Take a short break and focus on one thing at a time.",
 
 "Suicidal":
-"❤️ Please reach out to trusted people or professional help immediately.",
+"❤️ Please seek support from trusted people or professionals.",
 
 "Bipolar":
-"🌙 Maintain sleep routines and stay connected with support systems.",
+"🌙 Maintain routine and prioritize healthy sleep.",
 
 "Normal":
 "✨ Great! Keep maintaining healthy habits.",
 
 "Personality disorder":
-"🫶 Self awareness and support systems can help."
+"🫶 Practice self-awareness and seek guidance when needed."
 }
-
 
 # ---------------- HERO ----------------
 
@@ -164,21 +155,13 @@ Emotion Detection using Simple Recurrent Neural Networks
 
 <div class='hero-badges'>
 
-<div class='badge'>
-NLP
-</div>
+<div class='badge'>NLP</div>
 
-<div class='badge'>
-Simple RNN
-</div>
+<div class='badge'>Simple RNN</div>
 
-<div class='badge'>
-AI
-</div>
+<div class='badge'>AI</div>
 
-<div class='badge'>
-Mental Health
-</div>
+<div class='badge'>Mental Health</div>
 
 </div>
 
@@ -187,7 +170,6 @@ Mental Health
 """,
 unsafe_allow_html=True
 )
-
 
 # ---------------- ABOUT ----------------
 
@@ -209,13 +191,7 @@ Why Emotional AI Matters
 
 <p>
 
-Emotional AI can understand user feelings from text and help monitor emotional well-being.
-
-</p>
-
-<p>
-
-This system supports:
+Emotional AI can understand human feelings from text and monitor emotional well-being.
 
 </p>
 
@@ -229,13 +205,13 @@ This system supports:
 
 <li>Early Intervention</li>
 
-<li>Emotion-Aware Systems</li>
+<li>Emotion Aware Systems</li>
 
 </ul>
 
 <p>
 
-Simple RNN models learn sequence patterns and hidden-state context.
+Simple RNN learns sequential patterns using hidden states.
 
 </p>
 
@@ -244,7 +220,6 @@ Simple RNN models learn sequence patterns and hidden-state context.
 """,
 unsafe_allow_html=True
 )
-
 
 # ---------------- INPUT ----------------
 
@@ -270,13 +245,12 @@ Enter Thoughts
 unsafe_allow_html=True
 )
 
-
 user_text=st.text_area(
-"",
-placeholder=
-"Enter your thoughts or feelings here...",
-height=200,
-label_visibility="collapsed"
+    "Enter thoughts",
+    placeholder=
+    "Enter your thoughts or feelings here...",
+    height=220,
+    label_visibility="collapsed"
 )
 
 st.info("""
@@ -293,13 +267,11 @@ Examples:
 
 """)
 
-
 # ---------------- BUTTON ----------------
 
 analyze=st.button(
 "Analyze Emotion"
 )
-
 
 # ---------------- PREDICTION ----------------
 
@@ -308,7 +280,7 @@ if analyze:
     if user_text.strip()=="":
 
         st.warning(
-        "Please enter text"
+        "Please enter text."
         )
 
     else:
@@ -342,9 +314,9 @@ if analyze:
                 [np.argmax(probs)]
             )[0]
 
-            confidence=np.max(
-                probs
-            )*100
+            confidence=float(
+                np.max(probs)*100
+            )
 
             status=(
                 "Healthy"
@@ -352,8 +324,6 @@ if analyze:
                 else
                 "Needs Attention"
             )
-
-# RESULT
 
         st.markdown(
 
@@ -363,7 +333,7 @@ f"""
 
 <div class='verdict-title'>
 
-Emotion Detected:
+Emotion:
 {emotion}
 
 </div>
@@ -380,10 +350,7 @@ Confidence:
 """,
 
 unsafe_allow_html=True
-
 )
-
-# METRICS
 
         st.markdown(
 
@@ -403,7 +370,6 @@ Prediction
 
 </div>
 
-
 <div class='metric-tile'>
 
 <span class='mt-val'>
@@ -415,7 +381,6 @@ Confidence
 </span>
 
 </div>
-
 
 <div class='metric-tile'>
 
@@ -434,10 +399,7 @@ Status
 """,
 
 unsafe_allow_html=True
-
 )
-
-# BARS
 
         st.markdown(
         "<h3>Emotion Probability</h3>",
@@ -461,9 +423,7 @@ f"""
 <div class='bar-row'>
 
 <div class='bar-name'>
-
 {cls}
-
 </div>
 
 <div class='bar-track'>
@@ -471,15 +431,12 @@ f"""
 <div
 class='bar-fill'
 style='width:{pct}%'>
-
 </div>
 
 </div>
 
 <div class='bar-pct'>
-
 {pct}%
-
 </div>
 
 </div>
@@ -489,11 +446,9 @@ style='width:{pct}%'>
 unsafe_allow_html=True
 )
 
-# TIPS
-
         st.success(
             tips.get(
                 emotion,
-                "Take care of yourself"
+                "Take care of yourself."
             )
         )

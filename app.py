@@ -29,16 +29,25 @@ def local_css(file_name):
 
 local_css("style.css")
 
+
 # ---------------- NLTK ----------------
 
 try:
-    nltk.data.find("corpora/stopwords")
+
+    nltk.data.find(
+        "corpora/stopwords"
+    )
 
 except:
-    nltk.download("stopwords")
+
+    nltk.download(
+        "stopwords"
+    )
 
 stop_words=set(
-    stopwords.words("english")
+    stopwords.words(
+        "english"
+    )
 )
 
 # ---------------- LOAD MODEL ----------------
@@ -46,8 +55,8 @@ stop_words=set(
 @st.cache_resource
 def load_all():
 
-    model = load_model(
-        "mental_health_rnn_model.h5",
+    model=load_model(
+        "mental_health_rnn_model.keras",
         compile=False
     )
 
@@ -84,7 +93,6 @@ except Exception as e:
 
 max_len=100
 
-
 # ---------------- PREPROCESS ----------------
 
 def preprocess_text(text):
@@ -109,30 +117,31 @@ def preprocess_text(text):
 
     return " ".join(words)
 
-# ---------------- GUIDANCE ----------------
+
+# ---------------- TIPS ----------------
 
 tips={
 
 "Anxiety":
-"💙 Slow down. Take deep breaths and talk to someone you trust.",
+"💙 Slow down. Take deep breaths and speak with someone you trust.",
 
 "Depression":
-"🌸 Small steps matter. Reach out to loved ones and rest.",
+"🌸 Small steps matter. Take a short walk and talk with loved ones.",
 
 "Stress":
-"☕ Take a short break and focus on one thing at a time.",
+"☕ Take a break and focus on one task at a time.",
 
 "Suicidal":
-"❤️ Please seek support from trusted people or professionals.",
+"❤️ Please reach out to trusted people or professional help immediately.",
 
 "Bipolar":
-"🌙 Maintain routine and prioritize healthy sleep.",
+"🌙 Maintain sleep routines and stay connected with support systems.",
 
 "Normal":
 "✨ Great! Keep maintaining healthy habits.",
 
 "Personality disorder":
-"🫶 Practice self-awareness and seek guidance when needed."
+"🫶 Self awareness and support systems can help."
 }
 
 # ---------------- HERO ----------------
@@ -155,13 +164,21 @@ Emotion Detection using Simple Recurrent Neural Networks
 
 <div class='hero-badges'>
 
-<div class='badge'>NLP</div>
+<div class='badge'>
+NLP
+</div>
 
-<div class='badge'>Simple RNN</div>
+<div class='badge'>
+Simple RNN
+</div>
 
-<div class='badge'>AI</div>
+<div class='badge'>
+AI
+</div>
 
-<div class='badge'>Mental Health</div>
+<div class='badge'>
+Mental Health
+</div>
 
 </div>
 
@@ -191,7 +208,7 @@ Why Emotional AI Matters
 
 <p>
 
-Emotional AI can understand human feelings from text and monitor emotional well-being.
+Emotional AI helps understand feelings from text and monitor emotional well-being.
 
 </p>
 
@@ -205,13 +222,13 @@ Emotional AI can understand human feelings from text and monitor emotional well-
 
 <li>Early Intervention</li>
 
-<li>Emotion Aware Systems</li>
+<li>Emotion Aware AI Systems</li>
 
 </ul>
 
 <p>
 
-Simple RNN learns sequential patterns using hidden states.
+Simple RNN learns sequential emotional patterns through hidden states.
 
 </p>
 
@@ -246,11 +263,16 @@ unsafe_allow_html=True
 )
 
 user_text=st.text_area(
-    "Enter thoughts",
-    placeholder=
-    "Enter your thoughts or feelings here...",
-    height=220,
-    label_visibility="collapsed"
+
+"Enter text",
+
+placeholder=
+"Enter your thoughts or feelings here...",
+
+height=220,
+
+label_visibility="collapsed"
+
 )
 
 st.info("""
@@ -280,7 +302,7 @@ if analyze:
     if user_text.strip()=="":
 
         st.warning(
-        "Please enter text."
+        "Please enter text"
         )
 
     else:
@@ -325,6 +347,8 @@ if analyze:
                 "Needs Attention"
             )
 
+# RESULT
+
         st.markdown(
 
 f"""
@@ -351,6 +375,8 @@ Confidence:
 
 unsafe_allow_html=True
 )
+
+# METRIC CARDS
 
         st.markdown(
 
@@ -401,6 +427,8 @@ Status
 unsafe_allow_html=True
 )
 
+# PROBABILITY BARS
+
         st.markdown(
         "<h3>Emotion Probability</h3>",
         unsafe_allow_html=True
@@ -445,6 +473,8 @@ style='width:{pct}%'>
 
 unsafe_allow_html=True
 )
+
+# GUIDANCE
 
         st.success(
             tips.get(
